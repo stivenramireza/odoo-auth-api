@@ -1,6 +1,9 @@
 from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 
+from src.services import user_service
+from src.utils.logger import logger
+
 
 app = FastAPI()
 
@@ -15,7 +18,7 @@ app.add_middleware(
 
 @app.get('/api/auth')
 def get_user() -> dict[str, any]:
-     return {
+    return {
         'code': status.HTTP_200_OK,
         'success': True,
         'data': {
@@ -26,12 +29,10 @@ def get_user() -> dict[str, any]:
 
 @app.get('/api/auth/user')
 def get_user() -> dict[str, any]:
-     return {
+    contacts = user_service.get_contacts()
+    logger.info(f'Contacts: {contacts}')
+    return {
         'code': status.HTTP_200_OK,
         'success': True,
-        'data': {
-            'name': 'Stiven Ramírez Arango',
-            'email': 'stivenramireza@gmail.com',
-            'phone': '3017179746'
-        }
+        'data': contacts
     }

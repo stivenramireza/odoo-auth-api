@@ -23,5 +23,5 @@ PYTHON_ENV = os.environ.get('PYTHON_ENV')
 
 ODOO_URL = os.environ.get('ODOO_URL')
 ODOO_DB = os.environ.get('ODOO_DB')
-ODOO_USER = os.environ.get('ODOO_USER')
-ODOO_PASS = os.environ.get('ODOO_PASS')
+ODOO_USERNAME = os.environ.get('ODOO_USERNAME')
+ODOO_PASSWORD = os.environ.get('ODOO_PASSWORD')
