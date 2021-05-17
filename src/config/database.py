@@ -1,3 +1,5 @@
+from xmlrpc.client import ServerProxy
+
 from src.utils.secrets import (
     ODOO_URL,
     ODOO_DB,
@@ -5,7 +7,7 @@ from src.utils.secrets import (
     ODOO_PASSWORD
 )
 
-from xmlrpc.client import ServerProxy
+from src.utils.logger import logger
 
 
 class OdooConnection:
@@ -16,11 +18,11 @@ class OdooConnection:
     def __init__(self) -> None:
         if OdooConnection.__instance is None:
             try:
-                common = xmlrpc.client.ServerProxy(f'{ODOO_URL}/xmlrpc/2/common')
+                common = ServerProxy(f'{ODOO_URL}/xmlrpc/2/common')
                 self.uid = common.authenticate(ODOO_DB, ODOO_USERNAME, ODOO_PASSWORD, {})
-                OdooConnection.__instance = xmlrpc.client.ServerProxy(f'{ODOO_URL}/xmlrpc/2/object')
+                OdooConnection.__instance = ServerProxy(f'{ODOO_URL}/xmlrpc/2/object')
                 logger.info('Connected to Odoo database successfully')
-            except DatabaseError as error:
+            except Exception as error:
                 logger.error(f'Error to connect to Odoo database: {error}')
         else:
             raise Exception('You cannot create another Odoo connection')
@@ -31,20 +33,20 @@ class OdooConnection:
             OdooConnection()
         return OdooConnection.__instance
 
-    def search_and_read(model: str, fields: list[str] = [], where: list[any] = [], limit: int = 10) -> None:
+    def search_and_read(self, model: str, fields: list[str] = [], where: list[any] = [], limit: int = 10) -> None:
         self.get_instance().execute_kw(
             ODOO_DB, self.uid, ODOO_PASSWORD, 
-            model, 'search_read', [[where]], 
+            model, 'search_read', [], 
             {'fields': fields, 'limit': limit}
         )
 
-    def create(model: str, params: list[any] = []) -> None:
+    def create(self, model: str, params: list[any] = []) -> None:
         self.get_instance().execute_kw(
             ODOO_DB, self.uid, ODOO_PASSWORD,
             model, 'create', params
         )
     
-    def write(model: str, id: list[int] = [], params: list[any] = []) -> None:
+    def write(self, model: str, id: list[int] = [], params: list[any] = []) -> None:
         new_params = [int(id)]
         new_params.append(params)
         values: list[any] = []
