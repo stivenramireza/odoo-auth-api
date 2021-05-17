@@ -15,7 +15,7 @@ app.add_middleware(
 
 @app.get('/api/auth')
 def get_user() -> dict[str, any]:
-     return {
+    return {
         'code': status.HTTP_200_OK,
         'success': True,
         'data': {
@@ -26,7 +26,7 @@ def get_user() -> dict[str, any]:
 
 @app.get('/api/auth/user')
 def get_user() -> dict[str, any]:
-     return {
+    return {
         'code': status.HTTP_200_OK,
         'success': True,
         'data': {
