@@ -1,4 +1,4 @@
-from src.controllers.registrable_controller import app
+from src.controllers.auth_controller import app
 from src.utils.secrets import PORT, PYTHON_ENV
 from src.utils.logger import logger
 

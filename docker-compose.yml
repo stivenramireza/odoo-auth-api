@@ -2,6 +2,6 @@ version: '3'
 
 services:
   odoo-auth:
-    build: .
+    image: odoo-auth:latest
     ports:
       - 8000:8000

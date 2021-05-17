@@ -3,7 +3,8 @@ from src.utils.logger import logger
 
 import os
 
-if PYTHON_ENV == 'production':
+ENV = os.environ.get('ENV')
+if ENV == 'production':
     dotenv_path = '.env'
     logger.info('Using production environment variables')
 else:
