@@ -29,10 +29,8 @@ def get_user() -> dict[str, any]:
 
 @app.get('/api/auth/user')
 def get_user() -> dict[str, any]:
-    contacts = user_service.get_contacts()
-    logger.info(f'Contacts: {contacts}')
     return {
         'code': status.HTTP_200_OK,
         'success': True,
-        'data': contacts
+        'data': user_service.get_contacts()
     }
