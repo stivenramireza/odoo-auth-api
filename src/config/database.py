@@ -33,8 +33,8 @@ class OdooConnection:
             OdooConnection()
         return OdooConnection.__instance
 
-    def search_and_read(self, model: str, fields: list[str] = [], where: list[any] = [], limit: int = 10) -> None:
-        self.get_instance().execute_kw(
+    def search_and_read(self, model: str, fields: list[str] = [], where: list[any] = [], limit: int = 10) -> list[dict[str, any]]:
+        return self.get_instance().execute_kw(
             ODOO_DB, self.uid, ODOO_PASSWORD, 
             model, 'search_read', [], 
             {'fields': fields, 'limit': limit}
