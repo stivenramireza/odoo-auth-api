@@ -1,4 +1,4 @@
-# Odoo Auth
+# Odoo Auth API
 
 User management and authentication API using Odoo 14 external web service.
 
